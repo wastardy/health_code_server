@@ -5,13 +5,13 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import corsMiddleware from './middleware/cors.js';
 
-import authRoutes from './routes/auth.js'
-import userRoutes from './routes/users.js'
-import postRoutes from './routes/posts.js'
-import likeRoutes from './routes/likes.js'
-import commentRoutes from './routes/comments.js'
-import challengeRoutes from './routes/challenges.js'
-import relationshipRoutes from './routes/relationships.js'
+import authRoutes from './routes/auth.js';
+import userRoutes from './routes/users.js';
+// import postRoutes from './routes/posts.js'
+// import likeRoutes from './routes/likes.js'
+// import commentRoutes from './routes/comments.js'
+// import challengeRoutes from './routes/challenges.js'
+// import relationshipRoutes from './routes/relationships.js'
 
 dotenv.config();
 
@@ -26,11 +26,11 @@ app.use(corsMiddleware);
 // routes
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
-app.use('/posts', postRoutes);
-app.use('/likes', likeRoutes);
-app.use('/comments', commentRoutes);
-app.use('/challenges', challengeRoutes);
-app.use('/relationships', relationshipRoutes);
+// app.use('/posts', postRoutes);
+// app.use('/likes', likeRoutes);
+// app.use('/comments', commentRoutes);
+// app.use('/challenges', challengeRoutes);
+// app.use('/relationships', relationshipRoutes);
 
 
 // this route will be reached ONLY if previous routes
