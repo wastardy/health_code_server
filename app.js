@@ -12,6 +12,7 @@ import likeRoutes from './routes/likes.js'
 import commentRoutes from './routes/comments.js'
 import challengeRoutes from './routes/challenges.js'
 import relationshipRoutes from './routes/relationships.js'
+// import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(corsMiddleware);
+// app.use(cookieParser);
 
 
 // routes
