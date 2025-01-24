@@ -1,4 +1,5 @@
 import User from '../models/User.js';
+import serverErrorHandler from '../middleware/serverErrorHandler.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -39,14 +40,54 @@ export const register = async (req, res) => {
             user_id: newUser.id,
         });
     }
-    catch(err) {
-        console.error(`Error during registration: ${err.message}`);
-        return res.status(500).json({ message: 'Server error' });
+    catch (err) {
+        serverErrorHandler(register.name, err, res);
     }
 }
 
 export const login = async (req, res) => {
-    
+    console.log('\nLogin incoming data:', req.body, '\n');
+
+    try {
+        const { email, password } = req.body;
+
+        // check if user exists
+        const user = await User.findOne({
+            where: { email },
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                message: 'User not found',
+            });
+        }
+
+        // check password
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(400).json({
+                message: 'Incorrect password',
+            })
+        }
+
+        const jwtToken = jwt.sign(
+            { id: user.id, email: user.email }, 
+            process.env.JWT_KEY, 
+            { expiresIn: '1h' }
+        );
+
+        res.cookie('accessToken', jwtToken, {
+            httpOnly: true
+        }).status(200).json({
+            message: 'Login successful',
+            jwtToken, 
+            user_id: user.id, 
+            email: user.email,
+        });
+    }
+    catch (err) {
+        serverErrorHandler(login.name, err, res);
+    }
 }
 
 export const logout = async (req, res) => {
