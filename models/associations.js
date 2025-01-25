@@ -1,5 +1,6 @@
 import User from './User.js';
 import Posts from './Posts.js';
+import Comments from './Comments.js';
 import Relationships from './Relationships.js';
 
 // Define associations
@@ -12,4 +13,11 @@ Relationships.belongsTo(User, { foreignKey: 'follower_id' });
 User.hasMany(Relationships, { foreignKey: 'following_id' });
 Relationships.belongsTo(User, { foreignKey: 'following_id' });
 
-export { User, Posts, Relationships };
+
+User.hasMany(Comments, { foreignKey: 'user_id' });
+Comments.belongsTo(User, { foreignKey: 'user_id' });
+
+Posts.hasMany(Comments, { foreignKey: 'post_id' });
+Comments.belongsTo(Posts, { foreignKey: 'post_id' });
+
+export { User, Posts, Relationships, Comments };
