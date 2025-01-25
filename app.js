@@ -3,6 +3,7 @@ import db from './config/db.js';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import corsMiddleware from './middleware/cors.js';
 
 import authRoutes from './routes/auth.js';
@@ -12,7 +13,7 @@ import likeRoutes from './routes/likes.js'
 import commentRoutes from './routes/comments.js'
 import challengeRoutes from './routes/challenges.js'
 import relationshipRoutes from './routes/relationships.js'
-// import cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -22,7 +23,11 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(corsMiddleware);
-// app.use(cookieParser);
+app.use(cors({
+    // origin: 'http://localhost:5173', // allow requests from frontend side
+    // credentials: true,
+}));
+app.use(cookieParser());
 
 
 // routes
