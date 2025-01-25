@@ -100,5 +100,42 @@ export const addComment = async (req, res) => {
 }
 
 export const deleteComment = async (req, res) => {
+    const token = req.cookies.accessToken;
 
+    console.log(`\nToken from cookies: ${token}\n`);
+
+    if (!token) {
+        return res.status(401).json('User not logged in');
+    }
+
+    jwt.verify(token, process.env.JWT_KEY, async (err, userInfo) => {
+        if (err) {
+            return res.status(403).json('Token is not valid')
+        }
+
+        const { comment_id } = req.params;
+
+        if (!comment_id) {
+            return res.status(400).json('Comment ID is required');
+        }
+
+        try {
+            const comment = await Comments.findByPk(comment_id);
+
+            if (!comment) {
+                return res.status(404).json('Comment not found');
+            }
+
+            if (comment.user_id !== userInfo.id) {
+                return res.status(403).json('You are not authorized to delete this comment');
+            }
+
+            await comment.destroy();
+
+            return res.status(200).json('Comment has been deleted');
+        }
+        catch (err) {
+            serverErrorHandler(deleteComment.name, err, res);
+        }
+    });
 }
