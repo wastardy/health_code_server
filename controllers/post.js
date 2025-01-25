@@ -111,5 +111,42 @@ export const addPost = async (req, res) => {
 }
 
 export const deletePost = async (req, res) => {
+    const token = req.cookies.accessToken;
 
+    console.log(`Token from cookies: ${token}`);
+
+    if (!token) {
+        return res.status(401).json('User not logged in');
+    }
+
+    jwt.verify(token, process.env.JWT_KEY, async (err, userInfo) => {
+        if (err) {
+            return res.status(403).json('Token is not valid');
+        }
+
+        try {
+            const post_id = req.params.post_id;
+
+            const post = await Posts.findOne({ 
+                where: { id: post_id } 
+            });
+
+            if (!post) {
+                return res.status(404).json('Post not found');
+            }
+
+            if (post.user_id !== userInfo.id) {
+                return res.status(403).json('You can delete only your post');
+            }
+
+            await Posts.destroy({
+                where: { id: post_id },
+            });
+
+            return res.status(200).json('Post has been deleted');
+        }
+        catch (err) {
+            serverErrorHandler(deletePost.name, err, res);
+        }
+    });
 }
