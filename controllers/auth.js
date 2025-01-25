@@ -77,7 +77,8 @@ export const login = async (req, res) => {
         );
 
         res.cookie('accessToken', jwtToken, {
-            httpOnly: true
+            httpOnly: true, 
+            secure: false,
         }).status(200).json({
             message: 'Login successful',
             jwtToken, 
