@@ -71,7 +71,43 @@ export const getPosts = async (req, res) => {
 }
 
 export const addPost = async (req, res) => {
+    const token = req.cookies.accessToken;
 
+    console.log(`Token from cookies: ${token}`);
+
+    if (!token) {
+        return res.status(401).json('User not logged in');
+    }
+
+    jwt.verify(token, process.env.JWT_KEY, async (err, userInfo) => {
+        if (err) {
+            return res.status(403).json('Token is not valid');
+        }
+
+        try {
+            const { title, desc, img, video } = req.body;
+
+            if (!desc && !img && !video) {
+                return res.status(400).json(
+                    'At least one of description, image, or video is required'
+                );
+            }
+
+            await Posts.create({
+                post_title: title || null,
+                post_description: desc || null, 
+                image: img || null, 
+                video: video || null, 
+                user_id: userInfo.id,
+                created_at: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
+            });
+
+            return res.status(200).json('Post has been created');
+        }
+        catch (err) {
+            serverErrorHandler(addPost.name, err, res);
+        }
+    });
 }
 
 export const deletePost = async (req, res) => {
