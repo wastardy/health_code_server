@@ -67,5 +67,45 @@ export const addLike = async (req, res) => {
 }
 
 export const deleteLike = async (req, res) => {
+    const token = req.cookies.accessToken;
 
+    console.log(`Token from cookies: ${token}`);
+
+    if (!token) {
+        return res.status(401).json('User not logged in');
+    }
+
+    jwt.verify(token, process.env.JWT_KEY, async (err, userInfo) => {
+        if (err) {
+            return res.status(403).json('Token is not valid');
+        }
+
+        const { post_id } = req.params;
+
+        try {
+            const existingLike = await Likes.findOne({
+                where: {
+                    user_id: userInfo.id,
+                    post_id: post_id,
+                }
+            });
+
+            if (!existingLike) {
+                return res.status(400).json('You have not liked this post yet');
+            }   
+
+            // remove like
+            await Likes.destroy({
+                where: {
+                    user_id: userInfo.id, 
+                    post_id: post_id,
+                }
+            });
+
+            return res.status(200).json('Like has been removed');
+        }
+        catch (err) {
+            serverErrorHandler(deleteLike.name, err, res);
+        }
+    });
 }
