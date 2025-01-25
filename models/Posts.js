@@ -7,6 +7,10 @@ const Posts = db.define('Posts', {
         primaryKey: true, 
         autoIncrement: true,
     },
+    post_title: {
+        type: DataTypes.STRING(200),
+        allowNull: true,
+    }, 
     post_description: {
         type: DataTypes.STRING(400),
         allowNull: true,
