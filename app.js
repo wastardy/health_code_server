@@ -11,6 +11,7 @@ import userRoutes from './routes/users.js';
 import postRoutes from './routes/posts.js'
 import likeRoutes from './routes/likes.js'
 import commentRoutes from './routes/comments.js'
+import shareRoutes from './routes/shares.js';
 import challengeRoutes from './routes/challenges.js'
 import relationshipRoutes from './routes/relationships.js'
 import cookieParser from 'cookie-parser';
@@ -36,6 +37,7 @@ app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 app.use('/likes', likeRoutes);
 app.use('/comments', commentRoutes);
+app.use('/shares', shareRoutes);
 app.use('/challenges', challengeRoutes);
 app.use('/relationships', relationshipRoutes);
 
