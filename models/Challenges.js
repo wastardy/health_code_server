@@ -7,6 +7,10 @@ const Challenges = db.define('Challenges', {
         primaryKey: true, 
         autoIncrement: true,
     },
+    type: {
+        type: DataTypes.ENUM('outdoor_activity', 'indoor_activity', 'sleep', 'water', 'nutrition'),
+        allowNull: false,
+    },
     title: {
         type: DataTypes.STRING(400), 
         allowNull: false,
