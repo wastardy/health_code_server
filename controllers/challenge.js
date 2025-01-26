@@ -107,5 +107,29 @@ export const addChallenge = async (req, res) => {
 }
 
 export const deleteChallenge = async (req, res) => {
+    const userId = req.user.id;
+    const challengeId = req.params.challenge_id;
 
+    try {
+        const challenge = await Challenges.findOne({
+            where: { id: challengeId }
+        });
+
+        if (!challenge) {
+            return res.status(404).json('Challenge not found');
+        }
+
+        if (challenge.user_id !== userId) {
+            return res.status(403).json('You are not authorized to delete this challenge');
+        }
+
+        await Challenges.destroy({
+            where: { id: challengeId }
+        });
+
+        return res.status(200).json('Challenge deleted successfully!');
+    }
+    catch (err) {
+        serverErrorHandler(deleteChallenge.name, err, res);
+    }
 }
