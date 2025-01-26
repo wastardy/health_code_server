@@ -1,4 +1,5 @@
 import express from 'express';
+import verifyToken from '../middleware/checkAuth.js';
 import { 
     getComments, 
     addComment, 
@@ -7,8 +8,8 @@ import {
 
 const router = express.Router();
 
-router.get('/', getComments);
-router.post('/', addComment);
-router.delete('/:comment_id', deleteComment);
+router.get('/', verifyToken, getComments);
+router.post('/', verifyToken, addComment);
+router.delete('/:comment_id', verifyToken, deleteComment);
 
 export default router;
