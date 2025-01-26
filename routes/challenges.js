@@ -1,4 +1,5 @@
 import express from 'express';
+import verifyToken from '../middleware/checkAuth.js';
 import { 
     getChallenges, 
     addChallenge, 
@@ -7,8 +8,8 @@ import {
 
 const router = express.Router();
 
-router.get('/', getChallenges);
-router.post('/', addChallenge);
-router.delete('/:challenge_id', deleteChallenge);
+router.get('/', verifyToken, getChallenges);
+router.post('/', verifyToken, addChallenge);
+router.delete('/:challenge_id', verifyToken, deleteChallenge);
 
 export default router;
