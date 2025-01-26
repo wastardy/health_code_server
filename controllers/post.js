@@ -33,7 +33,12 @@ export const getPosts = async (req, res) => {
                     order: [['created_at', 'DESC']],
                 });
 
-                return res.status(200).json(posts);
+                const countPosts = posts.length;
+
+                return res.status(200).json({
+                    count_posts: countPosts,
+                    posts: posts,
+                });
             }
 
             // otherwise
@@ -62,7 +67,12 @@ export const getPosts = async (req, res) => {
                 order: [['created_at', 'DESC']],
             });
     
-            return res.status(200).json(posts);
+            const countPosts = posts.length;
+
+            return res.status(200).json({
+                count_posts: countPosts,
+                posts: posts,
+            });
         }
         catch (err) {
             serverErrorHandler(getPosts.name, err, res);
