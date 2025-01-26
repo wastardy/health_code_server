@@ -28,7 +28,7 @@ const Challenges = db.define('Challenges', {
         allowNull: true,
     }, 
     status: {
-        type: DataTypes.ENUM('active', 'completed', 'cancelled'), 
+        type: DataTypes.ENUM('active', 'completed', 'cancelled', 'unavailable'), 
         allowNull: false,
         defaultValue: 'active',
     }, 
