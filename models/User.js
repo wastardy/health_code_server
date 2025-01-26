@@ -33,6 +33,10 @@ const User = db.define('User', {
         type: DataTypes.STRING,
         allowNull: true,
     }, 
+    bio: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     sex: {
         type: DataTypes.STRING,
         allowNull: true,
