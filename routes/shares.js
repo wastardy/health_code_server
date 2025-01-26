@@ -1,4 +1,5 @@
 import express from 'express';
+import verifyToken from '../middleware/checkAuth.js';
 import { 
     getShares, 
     addShare
@@ -6,7 +7,7 @@ import {
 
 const router = express.Router();
 
-router.get('/', getShares);
-router.post('/', addShare);
+router.get('/', verifyToken, getShares);
+router.post('/', verifyToken, addShare);
 
 export default router;
