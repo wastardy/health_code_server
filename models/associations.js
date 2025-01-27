@@ -20,4 +20,9 @@ Comments.belongsTo(User, { foreignKey: 'user_id' });
 Posts.hasMany(Comments, { foreignKey: 'post_id' });
 Comments.belongsTo(Posts, { foreignKey: 'post_id' });
 
+
+// associations between WorkoutCategories and Workouts
+WorkoutCategories.hasMany(Workouts, { foreignKey: 'category_id' });
+Workouts.belongsTo(WorkoutCategories, { foreignKey: 'category_id' });
+
 export { User, Posts, Relationships, Comments };
