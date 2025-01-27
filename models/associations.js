@@ -2,6 +2,8 @@ import User from './User.js';
 import Posts from './Posts.js';
 import Comments from './Comments.js';
 import Relationships from './Relationships.js';
+import WorkoutCategories from './WorkoutCategories.js';
+import Workouts from './Workouts.js';
 
 // Define associations
 User.hasMany(Posts, { foreignKey: 'user_id' });
