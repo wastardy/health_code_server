@@ -1,5 +1,4 @@
 import express from 'express';
-import db from './config/db.js';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
@@ -8,18 +7,22 @@ import corsMiddleware from './middleware/cors.js';
 
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
-import postRoutes from './routes/posts.js'
-import likeRoutes from './routes/likes.js'
-import commentRoutes from './routes/comments.js'
+import postRoutes from './routes/posts.js';
+import likeRoutes from './routes/likes.js';
+import commentRoutes from './routes/comments.js';
 import shareRoutes from './routes/shares.js';
-import challengeRoutes from './routes/challenges.js'
-import relationshipRoutes from './routes/relationships.js'
+import challengeRoutes from './routes/challenges.js';
+import relationshipRoutes from './routes/relationships.js';
+import dietRoutes from './routes/diets.js';
+import workoutCategories from './routes/workoutCategories.js';
+import workoutRoutes from './routes/workouts.js';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
 const app = express();
 
+//#region includes
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -29,9 +32,18 @@ app.use(cors({
     // credentials: true,
 }));
 app.use(cookieParser());
+//#endregion
 
+//#region routes
+// test route
+app.use('/test', (req, res) => 
+    res.status(200).json({
+        message: 'HealthCode API is up to use!',
+        timestamp: new Date().toISOString(),
+        status: 'success'
+    })
+);
 
-// routes
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
@@ -40,8 +52,12 @@ app.use('/comments', commentRoutes);
 app.use('/shares', shareRoutes);
 app.use('/challenges', challengeRoutes);
 app.use('/relationships', relationshipRoutes);
+app.use('/diets', dietRoutes);
+app.use('/workout_categories', workoutCategories);
+app.use('/workouts', workoutRoutes);
+//#endregion
 
-
+//#region error_handlers
 // this route will be reached ONLY if previous routes
 // weren't able to handle the request
 app.use((req, res, next) => {
@@ -57,5 +73,6 @@ app.use((error, req, res, next) => {
         error: { message: error.message }
     });
 });
+//#endregion
 
 export default app;
