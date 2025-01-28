@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import corsMiddleware from './middleware/cors.js';
 
+import testRoutes from './routes/test.js'
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import postRoutes from './routes/posts.js';
@@ -36,25 +37,19 @@ app.use(cookieParser());
 
 //#region routes
 // test route
-app.use('/test', (req, res) => 
-    res.status(200).json({
-        message: 'HealthCode API is up to use!',
-        timestamp: new Date().toISOString(),
-        status: 'success'
-    })
-);
+app.use('/api/test', testRoutes);
 
-app.use('/auth', authRoutes);
-app.use('/users', userRoutes);
-app.use('/posts', postRoutes);
-app.use('/likes', likeRoutes);
-app.use('/comments', commentRoutes);
-app.use('/shares', shareRoutes);
-app.use('/challenges', challengeRoutes);
-app.use('/relationships', relationshipRoutes);
-app.use('/diets', dietRoutes);
-app.use('/workout_categories', workoutCategories);
-app.use('/workouts', workoutRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/likes', likeRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/shares', shareRoutes);
+app.use('/api/challenges', challengeRoutes);
+app.use('/api/relationships', relationshipRoutes);
+app.use('/api/diets', dietRoutes);
+app.use('/api/workout_categories', workoutCategories);
+app.use('/api/workouts', workoutRoutes);
 //#endregion
 
 //#region error_handlers
