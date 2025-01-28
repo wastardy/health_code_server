@@ -1,4 +1,5 @@
 import express from 'express';
+import verifyToken from '../middleware/checkAuth.js';
 import {
     getRelationships, 
     addRelationship, 
@@ -7,8 +8,8 @@ import {
 
 const router = express.Router();
 
-router.get('/', getRelationships);
-router.post('/', addRelationship);
-router.delete('/', deleteRelationship);
+router.get('/', verifyToken, getRelationships);
+router.post('/', verifyToken, addRelationship);
+router.delete('/', verifyToken, deleteRelationship);
 
 export default router;
