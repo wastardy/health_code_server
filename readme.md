@@ -1,5 +1,12 @@
 # HealtCode API Documentation
 
+## Base URL
+The base URL for the HealthCode API is:
+
+> **[https://health-code-server.onrender.com](https://health-code-server.onrender.com)**
+
+---
+
 ## Test Connection
 
 ### GET `/api/test`
