@@ -1,4 +1,5 @@
 import express from 'express';
+import verifyToken from '../middleware/checkAuth.js';
 import { 
     getLikes, 
     addLike, 
@@ -7,8 +8,8 @@ import {
 
 const router = express.Router();
 
-router.get('/', getLikes);
-router.post('/', addLike);
-router.delete('/:post_id', deleteLike);
+router.get('/', verifyToken, getLikes);
+router.post('/', verifyToken, addLike);
+router.delete('/:post_id', verifyToken, deleteLike);
 
 export default router;
