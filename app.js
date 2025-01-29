@@ -24,13 +24,14 @@ dotenv.config();
 const app = express();
 
 //#region includes
+app.use(express.json());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(corsMiddleware);
 app.use(cors({
-    // origin: 'http://localhost:5173', // allow requests from frontend side
-    // credentials: true,
+    origin: 'http://localhost:5173', // allow requests from frontend side
+    credentials: true,
 }));
 app.use(cookieParser());
 //#endregion
