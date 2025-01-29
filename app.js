@@ -23,16 +23,32 @@ dotenv.config();
 
 const app = express();
 
+const corsOptions = {
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true, // allows transfer of cookies
+    allowedHeaders: [
+        "Content-Type", 
+        "Authorization", 
+        "X-Requested-With", 
+        "Accept"
+    ],
+    methods: [
+        "GET", 
+        "POST", 
+        "PUT", 
+        "PATCH", 
+        "DELETE", 
+        "OPTIONS"
+    ],
+}
+
 //#region includes
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(corsMiddleware);
-app.use(cors({
-    origin: 'http://localhost:5173', // allow requests from frontend side
-    credentials: true,
-}));
+app.use(cors(corsOptions));
 app.use(cookieParser());
 //#endregion
 

@@ -79,7 +79,7 @@ export const login = async (req, res) => {
         res.cookie('accessToken', jwtToken, {
             httpOnly: true, 
             secure: false,
-            sameSite: "lax"
+            sameSite: "none"
         }).status(200).json({
             message: 'Login successful',
             jwtToken, 
@@ -113,7 +113,7 @@ export const devLogin = async (req, res) => {
     res.cookie('accessToken', jwtToken, {
         httpOnly: true,
         secure: false,
-        sameSite: "lax"
+        sameSite: "none"
     }).status(200).json({
         message: 'Test login successful',
         jwtToken
