@@ -24,7 +24,10 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: [
+        'http://localhost:5173', 
+        'https://health-code-server.onrender.com'
+    ],
     credentials: true, // allows transfer of cookies
     allowedHeaders: [
         "Content-Type", 
@@ -49,6 +52,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // app.use(corsMiddleware);
 app.use(cors(corsOptions));
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+  });
 app.use(cookieParser());
 
 // allows all requests for CORS validation
