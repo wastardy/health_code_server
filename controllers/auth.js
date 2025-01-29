@@ -79,6 +79,7 @@ export const login = async (req, res) => {
         res.cookie('accessToken', jwtToken, {
             httpOnly: true, 
             secure: false,
+            sameSite: "lax"
         }).status(200).json({
             message: 'Login successful',
             jwtToken, 
@@ -89,6 +90,34 @@ export const login = async (req, res) => {
     catch (err) {
         serverErrorHandler(login.name, err, res);
     }
+}
+
+export const devLogin = async (req, res) => {
+    const testUser = {
+        id: 4,
+        username: "theanthonyedwards_",
+        email: "ant@gmail.com",
+        password: "1",
+        name: "Anthony Edwards",
+        cover_image: "https://png.pngtree.com/thumb_back/fw800/background/20240522/pngtree-above-the-clouds-and-above-minneapolis-minnesota-from-airplane-image_15682301.jpg",
+        profile_image: "https://playerstv.com/wp-content/uploads/2024/02/GetPaidStock.com-65d3b9d9dc21e.jpg",
+        bio: null,
+        sex: "he/him",
+        age: 23,
+        weight: "102.00",
+        height: "193.00"
+    };
+
+    const jwtToken = jwt.sign(testUser, process.env.JWT_KEY, { expiresIn: '7d' });
+
+    res.cookie('accessToken', jwtToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax"
+    }).status(200).json({
+        message: 'Test login successful',
+        jwtToken
+    });
 }
 
 export const logout = async (req, res) => {
