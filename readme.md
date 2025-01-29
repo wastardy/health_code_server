@@ -23,6 +23,22 @@ The base URL for the HealthCode API is:
 
 ## Authentication
 
+### POST (login for testing) `/api/auth/dev_login`
+**Description:** Logs in as a test user, setting an `accessToken` cookie to authenticate further API requests.
+**Response:**
+```json
+{
+    "message": "Test login successful",
+    "jwtToken": "bla_bla_bla_token_xd"
+}
+```
+**Notes:**
+
+- This endpoint is for development and testing purposes only.
+- The accessToken is stored in a cookie and must be sent with subsequent requests.
+
+---
+
 ### POST (register user) `/api/auth/register`
 **Request Body:**
 ```json
